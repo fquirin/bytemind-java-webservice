@@ -757,7 +757,7 @@ public class AccountManagerDynamoDB implements AccountManager, Authentication{
 					//---------now get basic info too----------
 					//this is the quick version that does not convert anything except the user roles just copies the raw objects
 					
-					rawBasicInfo = new HashMap<String, Object>();
+					rawBasicInfo = new HashMap<>();
 					
 					//fill with raw data
 					for (String key : returnBasics){
@@ -862,7 +862,7 @@ public class AccountManagerDynamoDB implements AccountManager, Authentication{
 				if (foundRoles != null){
 					Map<String, Object> roles = Converters.object2HashMap_SO(foundRoles);
 					if (roles != null && roles.containsKey("all")){
-						JSON.put(basicInfoJson, AccountMapper.ROLES, Converters.list2JsonArray((List<?>) roles.get("all")));
+						JSON.put(basicInfoJson, AccountBasicInfo.ROLES, Converters.list2JsonArray((List<?>) roles.get("all")));
 					}
 				}
 			//NAME handler
@@ -871,7 +871,7 @@ public class AccountManagerDynamoDB implements AccountManager, Authentication{
 				if (foundName != null){
 					Map<String, Object> name = Converters.object2HashMap_SO(foundName);
 					if (name != null && !name.isEmpty()){
-						JSON.put(basicInfoJson, AccountMapper.USER_NAME, Converters.map2Json(name));
+						JSON.put(basicInfoJson, AccountBasicInfo.NAME, Converters.map2Json(name));
 					}
 				}
 			

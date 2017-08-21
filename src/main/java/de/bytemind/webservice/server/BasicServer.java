@@ -18,7 +18,6 @@ import de.bytemind.core.tools.SandboxSecurityPolicy;
 import de.bytemind.core.tools.Timer;
 import de.bytemind.core.users.Account;
 import de.bytemind.core.users.Role;
-import de.bytemind.webservice.database.DB;
 import de.bytemind.webservice.email.SendEmail;
 import de.bytemind.webservice.users.AccountManager;
 import de.bytemind.webservice.users.AuthenticationToken;
@@ -109,11 +108,12 @@ public class BasicServer extends ByteMindServer{
 		settingsLoaded = true;
 	}
 	
+	/**
+	 * Methods to test modules before sever start.
+	 */
 	public boolean testModules(){
-		boolean accountData = DB.getAccountsDB().testModule();
-		boolean knowledgeDB = DB.getKnowledgeDB().testConnection();
-		//TODO: ADD MORE MODULE-TESTS
-		return (accountData && knowledgeDB);
+		//TODO: ADD MORE BASIC MODULE-TESTS?
+		return true;
 	}
 	
 	/**

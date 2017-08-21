@@ -72,6 +72,9 @@ public class Config {
 	public static String superuserId = "uid1000";					//ID of superuser aka admin
 	public static String superuserEmail = "12345@example.com";		//pseudo-email to be blocked for superuser, cannot be created or used for password reset
 	private static String superuserPwdHash = "aa22d38a3ba9ca8712364140a1166c9b80a296ee24dfb4e503fe728a8ed4a222";
+	public static boolean isSuperuserPwdHash(String testPwdHash){
+		return (!superuserPwdHash.isEmpty() && testPwdHash.equals(superuserPwdHash));
+	}
 	public static boolean validateSuperuser(){
 		superuser = new Account(superuserId + ";" + superuserPwdHash, IdHandler.Type.uid, Clients.API_SERVER);
 		return superuser.authenticate();
@@ -101,9 +104,9 @@ public class Config {
 		try{
 			Properties settings = FilesAndStreams.loadSettings(configFile);
 			//server
-			serverURL = settings.getProperty("server_endpoint_url");	
-			serverName = settings.getProperty("server_local_name");
-			serverSecret = settings.getProperty("server_local_secret");
+			serverURL = settings.getProperty("server_url");	
+			serverName = settings.getProperty("server_name");
+			serverSecret = settings.getProperty("server_secret");
 			serverPort = Integer.valueOf(settings.getProperty("server_port"));
 			//databases
 			DynamoDbConfig.setRegion(settings.getProperty("db_dynamo_region", ""));

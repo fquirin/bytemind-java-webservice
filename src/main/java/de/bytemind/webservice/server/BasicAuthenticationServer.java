@@ -31,12 +31,19 @@ import spark.Response;
  */
 public class BasicAuthenticationServer extends BasicServer{
 	
-	/**
-	 * Sets the authentication end-points so that this server can be used to create and authenticate users.
-	 */
-	public void loadAuthenticationEndpoints(){
-		post("/authentication", (request, response) -> 	authenticationAPI(request, response));
-		post("/authWhitelist", (request, response) ->	authenticationWhitelist(request, response));
+	@Override
+	public void setupStuff(){
+		super.setupStuff();
+	}
+	
+	@Override
+	public boolean testModules(){
+		super.testModules();
+		
+		boolean accountData = DB.getAccountsDB().testModule();
+		boolean knowledgeDB = DB.getKnowledgeDB().testConnection();
+		//TODO: ADD MORE MODULE-TESTS?
+		return (accountData && knowledgeDB);
 	}
 	
 	@Override
@@ -52,7 +59,15 @@ public class BasicAuthenticationServer extends BasicServer{
 		SetupElasticsearch.setupGuidGenerationMapping();
 		SetupElasticsearch.setupAuthenticationWhitelistMapping();
 	}
-		
+	
+	/**
+	 * Sets the authentication end-points so that this server can be used to create and authenticate users.
+	 */
+	public void loadAuthenticationEndpoints(){
+		post("/authentication", (request, response) -> 	authenticationAPI(request, response));
+		post("/authWhitelist", (request, response) ->	authenticationWhitelist(request, response));
+	}
+	
 	@Override
 	public void start(String[] args) {
 		super.start(args);
