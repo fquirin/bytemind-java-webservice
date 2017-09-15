@@ -56,8 +56,10 @@ public class BasicAuthenticationServer extends BasicServer{
 		SetupDynamoDB.setupAccountsTables();
 		
 		//Mappings for Elasticsearch
+		//SetupElasticsearch.cleanDatabase();
 		SetupElasticsearch.setupGuidGenerationMapping();
 		SetupElasticsearch.setupAuthenticationWhitelistMapping();
+		SetupElasticsearch.setupCustomMappings();
 	}
 	
 	/**

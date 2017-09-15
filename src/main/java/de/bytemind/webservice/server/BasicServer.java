@@ -86,15 +86,15 @@ public class BasicServer extends ByteMindServer{
 			}
 		}
 		if (serverType.equals(TEST_SERVER)){
-			Debugger.println("-- THIS IS A TEST SERVER --", 3);
+			Debugger.println("-- THIS IS A TEST SYSTEM --", 3);
 			Config.configurationFile = Config.configurationFolder + "config.test.properties";
 			Config.load_settings(Config.configurationFile);
 		}else if (serverType.equals(CUSTOM_SERVER)){
-			Debugger.println("-- THIS IS A CUSTOM SERVER --", 3);
+			Debugger.println("-- THIS IS A CUSTOM SYSTEM --", 3);
 			Config.configurationFile = Config.configurationFolder + "config.custom.properties";
 			Config.load_settings(Config.configurationFile);
 		}else{
-			Debugger.println("-- THIS IS A LIVE SERVER --", 3);
+			Debugger.println("-- THIS IS A LIVE SYSTEM --", 3);
 			Config.load_settings("");
 		}
 		if (Config.serveStaticFiles || serveStaticFiles){
