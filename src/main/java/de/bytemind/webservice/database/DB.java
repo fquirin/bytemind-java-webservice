@@ -58,6 +58,13 @@ public class DB {
 		knowledgeDB = (KnowledgeDatabase) ClassBuilder.construct(Config.knowledgeDB_module);
 	}
 	
+	
+	//TODO: remove all following methods (except the ones at the bottom maybe) and add them to database type classes like:
+	//account, storage, knowledge, etc.
+	//In each of these we might need: set, setAsync, get, getAsync, update, updateAsync, delete, deleteAsync.
+	//Data should always be in JSON format, set should overwrite the whole object at top of hierarchy, update should only change the item at the bottom of the hierarchy
+	
+	
 	//----------Account methods----------
 	
 	//TODO: add key filters and layers of security!! Best thing would be to restrict this to a user defined list of available info

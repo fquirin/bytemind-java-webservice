@@ -8,7 +8,7 @@ import java.util.Map;
 import de.bytemind.core.users.AccountBasicInfo;
 
 /**
- * This class handles the mapping of certain account entries to the correct database and fields (if they are nestet for example)
+ * This class handles the mapping of certain account entries to the correct database and fields (if they are nested for example)
  * 
  * @author Florian Quirin
  *

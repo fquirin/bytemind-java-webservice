@@ -235,10 +235,13 @@ public class BasicServer extends ByteMindServer{
 		}
 
 		//set access-control headers to enable CORS
-		before((request, response) -> {
-			if (Config.enableCORS){
-				enableCORS(response, "*", "*", "*");
-			}
+		if (Config.enableCORS){
+			enableCORS("*", "*", "*");
+		}
+		
+		//do something before everything else - e.g. some authentication check
+		before((request, response) -> {	
+			//System.out.println("BEFORE TEST 1"); 		//DEBUG
 		});
 		
 		//ERROR handling - TODO: improve
@@ -411,23 +414,31 @@ public class BasicServer extends ByteMindServer{
 		
 		//return answer in requested format
 		response.status(statusCode);
+		
 		if (header.contains("application/javascript")){
 			response.type("application/javascript");
 			msg = request.queryParams("callback") + "(" + msg + ");";
+		
 		}else if (header.contains("text/")){
 			if (msg.startsWith("{") || msg.startsWith("[")){
 				response.type("text/plain; charset=utf-8");
 			}else{
 				response.type("text/html; charset=utf-8");
 			}
+		
 		}else if (header.matches(".*/json($|;| ).*")){
 			response.type("application/json");
+		
+		}else if (header.contains("x-www-form-urlencoded")){
+			response.type("application/json");
+		
 		}else if (header.contains("multipart/form-data")){
 			if (msg.startsWith("{") || msg.startsWith("[")){
 				response.type("text/plain; charset=utf-8");
 			}else{
 				response.type("text/html; charset=utf-8");
 			}
+		
 		}else{
 			response.type("application/javascript");
 			msg = request.queryParams("callback") + "(" + msg + ");";
@@ -479,12 +490,30 @@ public class BasicServer extends ByteMindServer{
 	}
 	
 	/**
-	 * Enable CORS aka set access-control headers.
+	 * Enable CORS aka set access-control headers. This method is an initialization method and should be called once.
 	 */
-	public static void enableCORS(Response response, final String origin, final String methods, final String headers) {
-	   response.header("Access-Control-Allow-Origin", origin);
-	   response.header("Access-Control-Request-Method", methods);
-	   response.header("Access-Control-Allow-Headers", headers);
+	public static void enableCORS(final String origin, final String methods, final String headers) {
+
+	    options("/*", (request, response) -> {
+
+	        String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
+	        if (accessControlRequestHeaders != null) {
+	            response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
+	        }
+
+	        String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
+	        if (accessControlRequestMethod != null) {
+	            response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
+	        }
+
+	        return "OK";
+	    });
+
+	    before((request, response) -> {
+	        response.header("Access-Control-Allow-Origin", origin);
+	        response.header("Access-Control-Request-Method", methods);
+	        response.header("Access-Control-Allow-Headers", headers);
+	    });
 	}
 
 }

@@ -50,6 +50,8 @@ public class BasicAuthenticationServer extends BasicServer{
 	public void createDatabases(){
 		super.createDatabases();
 
+		//TODO: these should be methods of the modules and independent from the chosen module!  
+		
 		//Ticket storage for DynamoDB
 		SetupDynamoDB.setupBasicsTables();
 		//User accounts storage for DynamoDB
@@ -79,8 +81,8 @@ public class BasicAuthenticationServer extends BasicServer{
 	}
 	
 	/**
-	 * ---Authentication whitelist API---<br>
-	 * End-point to manage whitelist for new user registration.
+	 * ---Authentication white-list API---<br>
+	 * End-point to manage white-list for new user registration.
 	 */
 	public String authenticationWhitelist(Request request, Response response){
 		long tic = Timer.tic();

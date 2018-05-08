@@ -12,10 +12,10 @@ import de.bytemind.core.tools.FilesAndStreams;
 import de.bytemind.core.tools.RandomGen;
 import de.bytemind.core.users.Account;
 import de.bytemind.core.users.IdHandler;
+import de.bytemind.webservice.database.GlobalIdGeneratorElasticsearch;
 import de.bytemind.webservice.email.SendEmailBasicSmtp;
 import de.bytemind.webservice.users.AccountDataDynamoDB;
 import de.bytemind.webservice.users.AccountManagerDynamoDB;
-import de.bytemind.webservice.users.GlobalIdGeneratorElasticsearch;
 
 /**
  * Server configuration class.
@@ -43,7 +43,7 @@ public class Config {
 	public static int serverPort = 8001;						//server port
 	public static boolean enableCORS = true;					//enable CORS (set access-control headers)
 	public static boolean serveStaticFiles = false;				//enable static file serving
-	public static boolean useSSL = false;						//enable SSL support
+	public static boolean useSSL = false;						//enable SSL support - not needed if working behind a reverse proxy anyways
 	public static boolean restrictRegistration = true; 		//check new registrations against white-list?
 	
 	//Api info and default URLs

@@ -1,4 +1,4 @@
-package de.bytemind.webservice.users;
+package de.bytemind.webservice.database;
 
 import java.util.HashMap;
 
@@ -8,7 +8,6 @@ import de.bytemind.core.databases.ElasticSearchConfig;
 import de.bytemind.core.tools.Connectors;
 import de.bytemind.core.tools.JSON;
 import de.bytemind.core.users.IdHandler;
-import de.bytemind.webservice.database.DB;
 
 /**
  * Class to generate global unique IDs with Elasticsearch.

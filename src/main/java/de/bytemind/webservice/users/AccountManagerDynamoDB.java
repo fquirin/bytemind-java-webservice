@@ -396,7 +396,15 @@ public class AccountManagerDynamoDB implements AccountManager, Authentication{
 			Debugger.println(e.getMessage(), 1); 	//debug
 			errorCode = 7;
 			return false;
-		}			
+		}	
+		
+		//TODO: we have to check if this ID already exists (due to backup restore or something)
+		String testId = userExists(guuid, IdHandler.Type.uid);
+		if (!testId.isEmpty()){
+			Debugger.println("createUserAction() - DynamoDB - GUUID '" + guuid + "' already exists! Did you restore the database from a backup?", 1); 	//debug
+			errorCode = 7;
+			return false;
+		}
 		
 		//default keys 'n values:
 		
@@ -587,23 +595,28 @@ public class AccountManagerDynamoDB implements AccountManager, Authentication{
 			return false;
 		}
 		
-		//change password 	
-		String[] keys = new String[]{AccountMapper.PASSWORD, AccountMapper.PWD_SALT, AccountMapper.PWD_ITERATIONS};
-		Object[] objects = new Object[]{pwd, salt, iterations};
-		
 		//delete old token or make it invalid
 		write_reg_token(ticketId, new String[]{TOKENS_SUPP_TS}, new Object[]{new Long(0)});
 		
 		//-------------------------------------------------------------------------------------------
+		
+		//change password, delete old tokens, write values 
+		//and return true/false - error codes can be checked afterwards if necessary
+		HashMap<String, Object> emptyTokenDummy = new HashMap<String, Object>();
+		String[] keys = new String[]{
+				AccountMapper.PASSWORD, AccountMapper.PWD_SALT, AccountMapper.PWD_ITERATIONS, 
+				AccountMapper.TOKENS};
+		Object[] objects = new Object[]{
+				pwd, salt, iterations, 
+				emptyTokenDummy};
 
-		//write values and return true/false - error codes can be checked afterwards if necessary
 		return write_protected(guuid, IdHandler.Type.uid, keys, objects);
 	}
 	
 	//delete user - fields userid
 	@Override
 	public boolean deleteUser(JSONObject info) {
-		//TODO: make it like "createUser" ...
+		//TODO: make it like "createUser" ... or is a credentials check before enough?
 		
 		//get user ID
 		String userid = (String) info.get("userid");
@@ -819,11 +832,14 @@ public class AccountManagerDynamoDB implements AccountManager, Authentication{
 			return false;
 		}
 	}
-	//logout all clients 
+	//logout all clients - TODO: untested
 	@Override
 	public boolean logoutAllClients(String userid) {
-		//TODO: delete all key tokens
-		return false;
+		//delete all key tokens
+		HashMap<String, Object> emptyTokenDummy = new HashMap<String, Object>();
+		String[] keys = new String[]{ AccountMapper.TOKENS };
+		Object[] objects = new Object[]{ emptyTokenDummy };
+		return write_protected(userid, IdHandler.Type.uid, keys, objects);
 	}
 	
 	//return ID

@@ -2,6 +2,7 @@ package de.bytemind.webservice.users;
 
 import de.bytemind.core.tools.ClassBuilder;
 import de.bytemind.core.tools.Security;
+import de.bytemind.webservice.database.GlobalIdGenerator;
 import de.bytemind.webservice.server.Config;
 
 /**

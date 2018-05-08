@@ -42,9 +42,9 @@ public class EmailTest {
 	}
 	
 	public static void sendChangePassword(SendEmail client, String receiver, String lang){
-		String subject = "Here is the link to change your gigaaa password";
+		String subject = "Here is the link to change your password";
 		if (lang.equals(Language.DE.toValue())){
-			subject = "Hier der Link zum Ändern deines gigaaa Passworts";
+			subject = "Hier der Link zum Ändern deines Passworts";
 		}
 		String message = client.loadPasswordResetMessage(lang, "id", "ticketid", "token", "time");
 		//-send

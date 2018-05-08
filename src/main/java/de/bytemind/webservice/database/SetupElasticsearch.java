@@ -68,7 +68,7 @@ public class SetupElasticsearch {
 	}
 	
 	/**
-	 * Setup mapping for custom user indicies loaded from '[Settings]/Elasticsearch/customMappings/' folder.
+	 * Setup mapping for custom user indices loaded from '[Settings]/Elasticsearch/customMappings/' folder.
 	 */
 	public static void setupCustomMappings(){
 		List<File> files = FilesAndStreams.directoryToFileList(Config.configurationFolder + "Elasticsearch/customMappings/", null, false);

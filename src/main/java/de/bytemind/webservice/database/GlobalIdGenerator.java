@@ -1,4 +1,4 @@
-package de.bytemind.webservice.users;
+package de.bytemind.webservice.database;
 
 /**
  * Interface for classes that can generate unique global IDs where "global" really means across the whole framework usually database supported.

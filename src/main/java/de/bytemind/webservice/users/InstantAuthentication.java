@@ -15,7 +15,7 @@ import de.bytemind.core.users.Role;
 import de.bytemind.webservice.server.Config;
 
 /**
- * Basically skip authentication and allow all users. Only user that is handled in a special way and checked for password way is the admin.
+ * Basically skip authentication and allow all users. Only user that is handled in a special way and checked for password is the admin.
  * 
  * @author Florian Quirin
  *

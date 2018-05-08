@@ -14,6 +14,8 @@ public class Start {
 		//Load server settings from file (and arguments)
 		server.loadSettings(args);
 		
+		//TODO: server.addEndPoint(...)
+		
 		//And GO
 		server.start(args);
 	}
